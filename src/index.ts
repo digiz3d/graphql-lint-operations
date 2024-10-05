@@ -25,7 +25,7 @@ const documentsMap = new Map<string, DocumentNode>()
 for await (const operationFilePath of globIterate(operationsGlob)) {
   if (operationFilePath === schemaFilePath) continue
 
-  const document = parse(await  readFile(operationFilePath))
+  const document = parse(await readFile(operationFilePath))
   documentsMap.set(operationFilePath, document)
 }
 
