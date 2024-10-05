@@ -22,7 +22,7 @@ runs:
         bun-version: latest
     - run: bun add --global graphql
       shell: bash
-    - run: bun run index.ts
+    - run: bun run ${{ github.action_path }}/index.ts
       shell: bash
       env:
         SCHEMA_FILE: ${{ inputs.schema-file }}
