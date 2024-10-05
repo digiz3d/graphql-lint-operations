@@ -1,0 +1,28 @@
+name: 'Lint GraphQL operation files'
+description: 'Checks operation files against a schema to find deprecated fields'
+author: 'digiz3d'
+
+branding:
+  color: 'orange'
+  icon: 'trash'
+
+inputs:
+  schema-file:
+    description: 'Path to the schema file to use as reference'
+  operation-files-glob:
+    description: 'Glob to the operation file(s) to check against the schema'
+  report-files:
+    description: 'Indicate wether to report the paths of the files with deprecated fields'
+    default: 'true'
+runs:
+  using: 'composite'
+  steps:
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+    - run: bun install
+    - run: bun run index.ts
+      env:
+        SCHEMA_FILE: ${{ inputs.schema-file }}
+        OPERATION_FILES_GLOB: ${{ inputs.operation-files-glob }}
+        REPORT_FILES: ${{ inputs.report-files }}
