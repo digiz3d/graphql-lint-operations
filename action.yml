@@ -21,7 +21,9 @@ runs:
       with:
         bun-version: latest
     - run: bun install
+      shell: bash
     - run: bun run index.ts
+      shell: bash
       env:
         SCHEMA_FILE: ${{ inputs.schema-file }}
         OPERATION_FILES_GLOB: ${{ inputs.operation-files-glob }}
