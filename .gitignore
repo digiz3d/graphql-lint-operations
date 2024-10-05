@@ -118,7 +118,8 @@ out
 # Nuxt.js build / generate output
 
 .nuxt
-dist
+# have to be commited for Github Actions to run
+# dist
 
 # Gatsby files
 
