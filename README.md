@@ -11,7 +11,7 @@ You need the operation files (queries/mutations/subscriptions) and the schema fi
 
 If you commit the schema file in the client codebase, you can just use this action
 
-```
+```yaml
   - uses: actions/checkout@v4
   - uses: digiz3d/graphql-lint-operations@v0.1.5
     with:
@@ -21,7 +21,7 @@ If you commit the schema file in the client codebase, you can just use this acti
 
 If you don't commit the schema, then you might fetch it using rover
 
-```
+```yaml
   - uses: actions/checkout@v4
   - name: Install Rover
     run: |
