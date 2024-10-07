@@ -176,3 +176,4 @@ out
 .DS_Store
 
 *.graphql
+!test/*.graphql

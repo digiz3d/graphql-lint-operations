@@ -1,0 +1,20 @@
+query Everything {
+  someQuery
+  someDeprecatedQuery
+
+  someQueryWithInput(input: { someField: "hi" })
+  someQueryWithDeprecatedInput(input: { someField: "hi" })
+  someQueryWithDeprecatedInputField(input: { someField: "hi" })
+
+  someDeepQuery {
+    someField
+    someDeprecatedField
+    someSubField {
+      subTypeDeepField
+      subTypeDeepDeprecatedField
+    }
+  }
+  similarDeep: someDeepQuery {
+    ...SelectFieldsFromSomeType
+  }
+}

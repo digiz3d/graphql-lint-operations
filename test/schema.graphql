@@ -1,0 +1,38 @@
+schema {
+  query: Query
+}
+
+type Query {
+  someQuery: String
+  someDeprecatedQuery: String @deprecated(reason: "Some reason 1")
+
+  someQueryWithInput(input: SomeInput): String
+  someQueryWithDeprecatedInput(input: SomeInput2 @deprecated(reason: "Some reason 2")): String
+  someQueryWithDeprecatedInputField(input: SomeInputWithDeprecatedField): String
+
+  someDeepQuery: SomeType
+}
+
+input SomeInput {
+  someField: String
+}
+
+input SomeInput2 {
+  someField: String
+}
+
+input SomeInputWithDeprecatedField {
+  someField: String
+  someDeprecatedField: String @deprecated(reason: "Some reason 3")
+}
+
+type SomeType {
+  someField: String
+  someDeprecatedField: String @deprecated(reason: "Some reason 4")
+  someSubField: SomeSubType
+}
+
+type SomeSubType {
+  subTypeDeepField: String
+  subTypeDeepDeprecatedField: String @deprecated(reason: "Some reason 5")
+}
