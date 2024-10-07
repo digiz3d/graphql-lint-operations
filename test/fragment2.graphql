@@ -1,0 +1,5 @@
+fragment SelectFieldsFromSomeSubType on SomeSubType {
+  subTypeDeepField
+  subTypeDeepDeprecatedField
+  similarSubTypeDeepField: subTypeDeepDeprecatedField
+}

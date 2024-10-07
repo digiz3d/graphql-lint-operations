@@ -1,0 +1,10 @@
+fragment SelectFieldsFromSomeType on SomeType {
+  someField
+  someDeprecatedField
+  someSubField {
+    ...SelectFieldsFromSomeSubType
+  }
+  similarSubField: someSubField {
+    ...SelectFieldsFromSomeSubType
+  }
+}
