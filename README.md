@@ -24,7 +24,7 @@ If you commit the schema file in the client codebase:
 
 ```yaml
 - uses: actions/checkout@v4
-- uses: digiz3d/graphql-lint-operations@v0.1.5
+- uses: digiz3d/graphql-lint-operations@v1
   with:
     schema-file: './wherever/you/put/the/schema.graphql'
     operation-files-glob: '**/*.graphql'
@@ -42,7 +42,7 @@ If you don't commit the schema, then you might fetch it using rover:
   run: rover graph fetch YourOrg@environment --output ./downloaded-schema.graphql
   env:
     APOLLO_KEY: ${{ secrets.APOLLO_KEY }}
-- uses: digiz3d/graphql-lint-operations@v0.1.5
+- uses: digiz3d/graphql-lint-operations@v1
   with:
     schema-file: './downloaded-schema.graphql'
     operation-files-glob: '**/*.graphql'
