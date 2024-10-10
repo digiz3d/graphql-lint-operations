@@ -57319,13 +57319,9 @@ function validateOperationsAndReportDeprecatedFields(schema, documentsMap, fragm
                     const parentTypeName = parentType ? parentType.name : 'Unknown Type';
                     switch (parentTypeName) {
                         case 'Mutation':
-                            deprecatedFields.add(`Mutation "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
-                            break;
                         case 'Query':
-                            deprecatedFields.add(`Query "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
-                            break;
                         case 'Subscription':
-                            deprecatedFields.add(`Subscription "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
+                            deprecatedFields.add(`${parentTypeName} "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
                             break;
                         default:
                             deprecatedFields.add(`Field "${parentTypeName}.${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
