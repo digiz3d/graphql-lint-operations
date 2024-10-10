@@ -49509,7 +49509,9 @@ const schema = (0,graphql__WEBPACK_IMPORTED_MODULE_2__/* .buildSchema */ .IV5)(s
 const deprecatedFields = (0,_utils__WEBPACK_IMPORTED_MODULE_1__/* .validateOperationsAndReportDeprecatedFields */ .So)(schema, operationDocuments, fragmentsByName, dependenciesByFragmentName, shouldReportFiles);
 if (deprecatedFields.size > 0) {
     console.error('Deprecated fields found.');
-    deprecatedFields.forEach((field) => console.error(field));
+    Array.from(deprecatedFields)
+        .toSorted((a, b) => a.localeCompare(b))
+        .forEach((field) => console.error(field));
     process.exit(1);
 }
 else {
@@ -57302,12 +57304,32 @@ function validateOperationsAndReportDeprecatedFields(schema, documentsMap, fragm
         }
         const typeInfo = new graphql/* TypeInfo */.DxK(schema);
         (0,graphql/* visit */.YRT)(documentWithFragments, (0,graphql/* visitWithTypeInfo */.Sw7)(typeInfo, {
+            Argument(node) {
+                const argDef = typeInfo.getArgument();
+                if (argDef && argDef.deprecationReason) {
+                    const parentType = typeInfo.getFieldDef();
+                    const parentTypeName = parentType ? parentType.name : 'Unknown Type';
+                    deprecatedFields.add(`Argument "${node.name.value}" from "${parentTypeName}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
+                }
+            },
             Field(node) {
                 const fieldDef = typeInfo.getFieldDef();
                 if (fieldDef && fieldDef.deprecationReason) {
                     const parentType = typeInfo.getParentType();
                     const parentTypeName = parentType ? parentType.name : 'Unknown Type';
-                    deprecatedFields.add(`"${parentTypeName}.${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
+                    switch (parentTypeName) {
+                        case 'Mutation':
+                            deprecatedFields.add(`Mutation "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
+                            break;
+                        case 'Query':
+                            deprecatedFields.add(`Query "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
+                            break;
+                        case 'Subscription':
+                            deprecatedFields.add(`Subscription "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
+                            break;
+                        default:
+                            deprecatedFields.add(`Field "${parentTypeName}.${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`);
+                    }
                 }
             },
         }));

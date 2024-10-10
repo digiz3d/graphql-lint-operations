@@ -114,14 +114,42 @@ export function validateOperationsAndReportDeprecatedFields(
     visit(
       documentWithFragments,
       visitWithTypeInfo(typeInfo, {
+        Argument(node) {
+          const argDef = typeInfo.getArgument()
+          if (argDef && argDef.deprecationReason) {
+            const parentType = typeInfo.getFieldDef()
+            const parentTypeName = parentType ? parentType.name : 'Unknown Type'
+            deprecatedFields.add(
+              `Argument "${node.name.value}" from "${parentTypeName}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`,
+            )
+          }
+        },
         Field(node) {
           const fieldDef = typeInfo.getFieldDef()
           if (fieldDef && fieldDef.deprecationReason) {
             const parentType = typeInfo.getParentType()
             const parentTypeName = parentType ? parentType.name : 'Unknown Type'
-            deprecatedFields.add(
-              `"${parentTypeName}.${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`,
-            )
+            switch (parentTypeName) {
+              case 'Mutation':
+                deprecatedFields.add(
+                  `Mutation "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`,
+                )
+                break
+              case 'Query':
+                deprecatedFields.add(
+                  `Query "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`,
+                )
+                break
+              case 'Subscription':
+                deprecatedFields.add(
+                  `Subscription "${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`,
+                )
+                break
+              default:
+                deprecatedFields.add(
+                  `Field "${parentTypeName}.${node.name.value}" is deprecated${shouldReportFiles ? ` in ${operationFilePath}` : ''}`,
+                )
+            }
           }
         },
       }),
