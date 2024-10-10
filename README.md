@@ -7,7 +7,8 @@ Any deprecated field will be reported and make the CI fail.
 
 ## Usage
 
-You need the operation files (queries/mutations/subscriptions) and the schema file.
+You need the operation files (queries/mutations/subscriptions) and the schema file.  
+[According to the GraphQL spec](https://spec.graphql.org/draft/#sec-Root-Operation-Types), the schema must define at least a field of the Query root type.
 
 ### Input parameters
 
@@ -49,6 +50,9 @@ If you don't commit the schema, then you might fetch it using rover:
 
 ## Tech details
 
-Using [ncc](https://github.com/vercel/ncc) as a bundler
+Using [ncc](https://github.com/vercel/ncc) as a bundler.
 
 `dist` is committed be able to run with a `node20` runner without any installation step.
+
+This action does yet not scan object literals. It is fine as they are often replaced by variables in client operation files.  
+Feel free to submit a PR (with tests) if you would like to support it.

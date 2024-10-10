@@ -38,7 +38,9 @@ const deprecatedFields = validateOperationsAndReportDeprecatedFields(
 
 if (deprecatedFields.size > 0) {
   console.error('Deprecated fields found.')
-  deprecatedFields.forEach((field) => console.error(field))
+  Array.from(deprecatedFields)
+    .toSorted((a, b) => a.localeCompare(b))
+    .forEach((field) => console.error(field))
   process.exit(1)
 } else {
   console.log('No deprecated fields found. GG!')

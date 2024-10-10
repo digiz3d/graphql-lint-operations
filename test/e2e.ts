@@ -30,7 +30,16 @@ test('should find all deprecated usages', async () => {
     dependenciesByFragmentName,
     false,
   )
-  assert.equal(reportTypes.size, 3)
+  assert.equal(reportTypes.size, 4)
+  assert.deepEqual(
+    Array.from(reportTypes).toSorted((a, b) => a.localeCompare(b)),
+    [
+      'Argument "input" from "someQueryWithDeprecatedInput" is deprecated',
+      'Field "SomeSubType.subTypeDeepDeprecatedField" is deprecated',
+      'Field "SomeType.someDeprecatedField" is deprecated',
+      'Query "someDeprecatedQuery" is deprecated',
+    ],
+  )
 
   const reportTypesWithFiles = validateOperationsAndReportDeprecatedFields(
     schema,
@@ -39,5 +48,14 @@ test('should find all deprecated usages', async () => {
     dependenciesByFragmentName,
     true,
   )
-  assert.equal(reportTypesWithFiles.size, 3)
+  assert.equal(reportTypesWithFiles.size, 4)
+  assert.deepEqual(
+    Array.from(reportTypesWithFiles).toSorted((a, b) => a.localeCompare(b)),
+    [
+      'Argument "input" from "someQueryWithDeprecatedInput" is deprecated in test/query.graphql',
+      'Field "SomeSubType.subTypeDeepDeprecatedField" is deprecated in test/query.graphql',
+      'Field "SomeType.someDeprecatedField" is deprecated in test/query.graphql',
+      'Query "someDeprecatedQuery" is deprecated in test/query.graphql',
+    ],
+  )
 })
