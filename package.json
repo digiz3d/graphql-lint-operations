@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "glob": "^11.0.0",
+    "glob": "^11.1.0",
     "graphql": "^16.9.0"
   },
   "devDependencies": {
